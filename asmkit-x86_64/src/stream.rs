@@ -74,7 +74,7 @@ impl x86_64InstructionStream {
         Self { bytes: Vec::new(), labels: EntityList::new() }
     }
 
-    /// Move `src` to `dest.
+    /// Move *r8* to *r/m8*.
     pub fn mov_reg8_reg8(&mut self, dest: Reg8, src: Reg8) {
         let is_dest_extension = dest.is_extension();
         let is_src_extension = src.is_extension();
@@ -99,7 +99,7 @@ impl x86_64InstructionStream {
         self.write_byte((0b11 << 6) | (src.offset() << 3) | (dest.offset())); // value MODRM encoded
     }
 
-    /// Move `src` to `dest.
+    /// Move *r16* to *r/m16*.
     pub fn mov_reg16_reg16(&mut self, dest: Reg16, src: Reg16) {
         self.write_byte(0x66);
 
@@ -123,7 +123,7 @@ impl x86_64InstructionStream {
         self.write_byte((0b11 << 6) | (src.offset() << 3) | (dest.offset()));
     }
 
-    /// Move `src` to `dest.
+    /// Move *r32* to *r/m32*.
     pub fn mov_reg32_reg32(&mut self, dest: Reg32, src: Reg32) {
         let is_dest_extension = dest.is_extension();
         let is_src_extension = src.is_extension();
@@ -145,7 +145,7 @@ impl x86_64InstructionStream {
         self.write_byte((0b11 << 6) | (src.offset() << 3) | (dest.offset()));
     }
 
-    /// Move `src` to `dest.
+    /// Move *r64* to *r/m64*.
     pub fn mov_reg64_reg64(&mut self, dest: Reg64, src: Reg64) {
         let mut prefix = REX | REX_W; // REX.W prefix
 
@@ -162,7 +162,7 @@ impl x86_64InstructionStream {
         self.write_byte((0b11 << 6) | (src.offset() << 3) | (dest.offset())); // value MODRM encoded
     }
 
-    /// Move `src` to `dest.
+    /// Move *imm8* to *r8*.
     pub fn mov_reg8_imm8(&mut self, dest: Reg8, src: u8) {
         if dest.is_extension() {
             self.write_byte(REX | REX_B);
@@ -174,7 +174,7 @@ impl x86_64InstructionStream {
         self.write_byte(src);
     }
 
-    /// Move `src` to `dest.
+    /// Move *imm16* to *r16*.
     pub fn mov_reg16_imm16(&mut self, dest: Reg16, src: u16) {
         self.write_byte(0x66); // prefix
 
@@ -186,7 +186,7 @@ impl x86_64InstructionStream {
         self.write_word(src);
     }
 
-    /// Move `src` to `dest.
+    /// Move *imm32* to *r32*.
     pub fn mov_reg32_imm32(&mut self, dest: Reg32, src: u32) {
         if dest.is_extension() {
             self.write_byte(REX | REX_B); // extension prefix
@@ -196,7 +196,7 @@ impl x86_64InstructionStream {
         self.write_double_word(src);
     }
 
-    /// Move `src` to `dest.
+    /// Move *imm32* to *r64*.
     pub fn mov_reg64_imm32(&mut self, dest: Reg64, src: u32) {
         let mut prefix = REX | REX_W; // REX.W prefix
 
@@ -209,7 +209,7 @@ impl x86_64InstructionStream {
         self.write_double_word(src);
     }
 
-    /// Move `src` to `dest.
+    /// Move *imm64* to *r64*.
     pub fn mov_reg64_imm64(&mut self, dest: Reg64, src: u64) {
         // REX prefix
         let mut prefix = REX | REX_W;
@@ -223,9 +223,25 @@ impl x86_64InstructionStream {
         self.write_quad_word(src);
     }
 
-    /// Returns from the current function.
-    #[inline(always)]
-    pub fn ret(&mut self) {
+    /// Near return to calling procedure.
+    pub fn ret_near(&mut self) {
         self.write_byte(0xc3); // opcode
+    }
+
+    /// Far return to calling procedure.
+    pub fn ret_far(&mut self) {
+        self.write_byte(0xcb); // opcode
+    }
+
+    /// Far return to calling procedure and pop *imm16* bytes from stack.
+    pub fn ret_near_imm16(&mut self, imm16: u16) {
+        self.write_byte(0xc2);
+        self.write_word(imm16);
+    }
+
+    /// Far return to calling procedure and pop *imm16* bytes from stack.
+    pub fn ret_far_imm16(&mut self, imm16: u16) {
+        self.write_byte(0xca);
+        self.write_word(imm16);
     }
 }
