@@ -1,7 +1,7 @@
 [package]
 name = "asmkit"
 description = "Assembler engine written in Rust."
-version = "0.0.0"
+version = "0.0.1"
 license = "MIT"
 repository = "https://github.com/trimorphdev/asmkit"
 homepage = "https://github.com/trimorphdev/asmkit"
