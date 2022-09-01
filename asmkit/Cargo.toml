@@ -1,6 +1,10 @@
 [package]
 name = "asmkit"
+description = "Assembler tools written in Rust."
 version = "0.0.0"
+license = "MIT"
+repository = "https://github.com/trimorphdev/asmkit"
+homepage = "https://github.com/trimorphdev/asmkit"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
