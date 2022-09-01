@@ -223,6 +223,52 @@ impl x86_64InstructionStream {
         self.write_quad_word(src);
     }
 
+    /// Push *r/m16*.
+    pub fn push_reg16(&mut self, reg16: Reg16) {
+        self.write_byte(REX | REX_X); // rex prefix
+        self.write_byte(0x50 + reg16.offset()); // opcode
+    }
+
+    /// Push *r/m64*.
+    pub fn push_reg64(&mut self, reg64: Reg64) {
+        if reg64.is_extension() {
+            self.write_byte(0x41); // prefix
+        }
+        self.write_byte(0x50 + reg64.offset()); // opcode
+    }
+
+    /// Push *imm8*.
+    pub fn push_imm8(&mut self, imm8: u8) {
+        self.write_byte(0x6a);
+        self.write_byte(imm8);
+    }
+
+    /// Push *imm16*.
+    /// 
+    /// **NOTE:** extends *imm16* into an *imm32*.
+    pub fn push_imm16(&mut self, imm16: u16) {
+        self.write_byte(0x68);
+        self.write_double_word(imm16 as u32);
+    }
+
+    /// Push *imm32*.
+    pub fn push_imm32(&mut self, imm32: u32) {
+        self.write_byte(0x68);
+        self.write_double_word(imm32);
+    }
+
+    /// Push FS.
+    pub fn push_fs(&mut self) {
+        self.write_byte(0x0f);
+        self.write_byte(0xa0);
+    }
+
+    /// Push GS.
+    pub fn push_gs(&mut self) {
+        self.write_byte(0x0f);
+        self.write_byte(0xa8);
+    }
+
     /// Near return to calling procedure.
     pub fn ret_near(&mut self) {
         self.write_byte(0xc3); // opcode
