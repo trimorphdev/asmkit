@@ -43,22 +43,22 @@ impl InstructionStream for x86_64InstructionStream {
 
     #[inline(always)]
     fn write_word(&mut self, word: u16) {
-        self.bytes.append(&mut word.to_le_bytes().into_iter().collect());
+        self.bytes.append(&mut word.to_le_bytes().to_vec());
     }
 
     #[inline(always)]
     fn write_double_word(&mut self, word: u32) {
-        self.bytes.append(&mut word.to_le_bytes().into_iter().collect());
+        self.bytes.append(&mut word.to_le_bytes().to_vec());
     }
 
     #[inline(always)]
     fn write_quad_word(&mut self, word: u64) {
-        self.bytes.append(&mut word.to_le_bytes().into_iter().collect());
+        self.bytes.append(&mut word.to_le_bytes().to_vec());
     }
 
     #[inline(always)]
     fn write_double_quad_word(&mut self, word: u128) {
-        self.bytes.append(&mut word.to_le_bytes().into_iter().collect());
+        self.bytes.append(&mut word.to_le_bytes().to_vec());
     }
 
     #[inline(always)]
