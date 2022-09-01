@@ -2,6 +2,10 @@
 Changes since the `0.0.0` release.
 
 - **asmkit-x86_64**:
+    - Fixes:
+        - optimize `InstructionStream` implementation by converting slice to vec instead of iterating and collecting its values.
+    - Intrinsics:
+        - add: `intrinsic_push_rbp` intrinsic.
     - Mnemonics:
         - `ret`:
             - change!: `ret` mnemonic to `ret_near` mnemonic.
