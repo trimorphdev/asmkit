@@ -10,5 +10,5 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-asmkit-core = { path = "../asmkit-core", version = "0.0.0" }
-asmkit-x86_64 = { path = "../asmkit-x86_64", version = "0.0.0" }
+asmkit-core = { path = "../asmkit-core", version = "0.0.1" }
+asmkit-x86_64 = { path = "../asmkit-x86_64", version = "0.0.1" }
