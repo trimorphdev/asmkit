@@ -74,6 +74,12 @@ impl x86_64InstructionStream {
         Self { bytes: Vec::new(), labels: EntityList::new() }
     }
 
+    /// Pushes the stack base pointer onto the stack.
+    #[inline(always)]
+    pub fn intrinsic_push_rbp(&mut self) {
+        self.push_reg64(Reg64::Rbp);
+    }
+
     /// Move *r8* to *r/m8*.
     pub fn mov_reg8_reg8(&mut self, dest: Reg8, src: Reg8) {
         let is_dest_extension = dest.is_extension();
