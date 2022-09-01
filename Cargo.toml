@@ -1,0 +1,6 @@
+[workspace]
+members = [
+    "asmkit",
+    "asmkit-core",
+    "asmkit-x86_64",
+]
