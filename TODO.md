@@ -5,6 +5,7 @@
     - [ ] implement instructions and their variants
         - [ ] `mov`
     - [ ] implement relocations
+    - [ ] locked/atomic operations
 - [ ] **asmkit-x86**: x86 target for AsmKit
 - [ ] **asmkit-as**: cross-platform assembler implemented with AsmKit.
 - [ ] **asmkit-de**: cross-platform disassembler implemented with AsmKit.
