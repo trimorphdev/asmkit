@@ -4,6 +4,7 @@
 - [ ] **asmkit-x86_64**: x86_64 target for AsmKit
     - [ ] implement instructions and their variants
         - [ ] `mov`
+        - [ ] `push`
         - [x] `ret`
     - [ ] implement relocations
     - [ ] locked/atomic operations
